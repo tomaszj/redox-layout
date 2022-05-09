@@ -1,5 +1,6 @@
 /*
 Copyright 2021 Jeremy Herve <jeremy@jeremy.hu>
+Copyright 2022 Tomasz Janeczko
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,11 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _NAV 2
 #define _INTER 3
 #define _ADJUST 4
-
-// Define song.
-#ifdef AUDIO_ENABLE
-float tone_zelda[][2] = SONG(ZELDA_TREASURE);
-#endif
 
 enum custom_keycodes {
     COLEMAK = SAFE_RANGE,
@@ -74,9 +70,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case YOSHI:
             if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(tone_zelda);
-#endif
                 SEND_STRING(":yellow_yoshi:");
             }
             return false;
@@ -145,6 +138,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Shortcut to make keymap more readable
 #define KC_SYQT LT(_SYMB, KC_QUOT)
+#define KC_CTES LCTL_T(KC_ESC)
+#define KC_ALAS LALT_T(KC_PAST)
 #define SYM_L   MO(_SYMB)
 #define MO_INTR MO(_INTER)
 #define TT_ADJ  TT(_ADJUST)
@@ -170,15 +165,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_COLEMAK] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                                           ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_GRV  ,KC_1    ,KC_2    ,KC_3    ,KC_4    ,KC_5    ,                                            KC_6    ,KC_7    ,KC_8    ,KC_9    ,KC_0    ,KC_EQL  ,
+     KC_GRV  ,KC_1    ,KC_2    ,KC_3    ,KC_4    ,KC_5    ,                                            KC_6    ,KC_7    ,KC_8    ,KC_9    ,KC_0    ,KC_MINS ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB  ,KC_Q    ,KC_W    ,KC_F    ,KC_P    ,KC_G    ,KC_ESC  ,                           INV_1P ,KC_J    ,KC_L    ,KC_U    ,KC_Y    ,KC_SCLN ,KC_BSLS ,
+     KC_TAB  ,KC_Q    ,KC_W    ,KC_F    ,KC_P    ,KC_G    ,SYM_L   ,                           INV_1P ,KC_J    ,KC_L    ,KC_U    ,KC_Y    ,KC_SCLN ,KC_EQL  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     SYM_L   ,KC_A    ,KC_R    ,KC_S    ,KC_T    ,KC_D    ,M_BRACKET_LEFT,            M_BRACKET_RIGHT ,KC_H    ,KC_N    ,KC_E    ,KC_I    ,KC_O    ,KC_SYQT ,
+     KC_CTES ,KC_A    ,KC_R    ,KC_S    ,KC_T    ,KC_D    ,M_BRACKET_LEFT,            M_BRACKET_RIGHT ,KC_H    ,KC_N    ,KC_E    ,KC_I    ,KC_O    ,KC_SYQT ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT ,KC_Z    ,KC_X    ,KC_C    ,KC_V    ,KC_B    ,TT(_NAV),TT(_SYMB),      TT(_SYMB),TT(_NAV),KC_K    ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH ,KC_RSFT ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
-     MO_INTR ,KC_LCTL ,KC_HYPR ,KC_LALT ,     KC_LCMD ,    KC_BSPC ,KC_LCTL ,        KC_ENT  ,KC_SPC  ,    ALFRED  ,     TT_ADJ  ,KC_HYPR ,KC_RCTL ,MO_INTR
+     KC_BSLS ,KC_PPLS ,KC_PMNS ,KC_ALAS ,     KC_LCMD ,    KC_BSPC ,KC_DEL  ,        KC_ENT  ,KC_SPC  ,    KC_RALT ,     KC_LEFT ,KC_DOWN ,KC_UP   ,KC_RGHT
   //└────────┴────────┴────────┴────────┘    └────────┘   └────────┴────────┘       └────────┴────────┘   └────────┘    └────────┴────────┴────────┴────────┘
   ),
 
