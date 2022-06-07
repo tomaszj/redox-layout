@@ -94,44 +94,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             shift_held = record->event.pressed;
             return true;
             break;
-        case M_BRACKET_LEFT: {
-            if (record->event.pressed) {
-                if (shift_held) {
-                    unregister_code(KC_LSFT);
-                    unregister_code(KC_RSFT);
-                    register_code(KC_LBRC);
-                } else {
-                    register_code(KC_LSFT);
-                    register_code(KC_9);
-                }
-            } else {  // Release the key
-                unregister_code(KC_LBRC);
-                unregister_code(KC_LSFT);
-                unregister_code(KC_RSFT);
-                unregister_code(KC_9);
-            }
-            return false;
-            break;
-        }
-        case M_BRACKET_RIGHT: {
-            if (record->event.pressed) {
-                if (shift_held) {
-                    unregister_code(KC_LSFT);
-                    unregister_code(KC_RSFT);
-                    register_code(KC_RBRC);
-                } else {
-                    register_code(KC_LSFT);
-                    register_code(KC_0);
-                }
-            } else {  // Release the key
-                unregister_code(KC_RBRC);
-                unregister_code(KC_LSFT);
-                unregister_code(KC_RSFT);
-                unregister_code(KC_0);
-            }
-            return false;
-            break;
-        }
     }
     return true;
 };
@@ -169,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐                         ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB  ,KC_Q    ,KC_W    ,KC_F    ,KC_P    ,KC_B    ,SYM_L   ,                           INV_1P ,KC_J    ,KC_L    ,KC_U    ,KC_Y    ,KC_SCLN ,KC_EQL  ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┤                         ├────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_CTES ,KC_A    ,KC_R    ,KC_S    ,KC_T    ,KC_G    ,M_BRACKET_LEFT,            M_BRACKET_RIGHT ,KC_M    ,KC_N    ,KC_E    ,KC_I    ,KC_O    ,KC_SYQT ,
+     KC_CTES ,KC_A    ,KC_R    ,KC_S    ,KC_T    ,KC_G    ,KC_LBRC ,                          KC_RBRC ,KC_M    ,KC_N    ,KC_E    ,KC_I    ,KC_O    ,KC_SYQT ,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┐       ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT ,KC_Z    ,KC_X    ,KC_C    ,KC_D    ,KC_V    ,TT(_NAV),TT(_SYMB),      TT(_SYMB),TT(_NAV),KC_K    ,KC_H    ,KC_COMM ,KC_DOT  ,KC_SLSH ,KC_RSFT ,
   //├────────┼────────┼────────┼────────┼────┬───┴────┬───┼────────┼────────┤       ├────────┼────────┼───┬────┴───┬────┼────────┼────────┼────────┼────────┤
